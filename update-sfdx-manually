@@ -1,0 +1,18 @@
+#!/bin/bash
+echo "remove unnecessary files"
+rm sfdx-linux-amd64.tar.*
+echo "getting new sfdx tar"
+wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+echo "remove old backup"
+sudo rm -r sfdx_old
+mv sfdx sfdx_old
+mkdir sfdx
+echo "unzip file"
+tar xJf sfdx-linux-amd64.tar.xz -C sfdx --strip-components 1
+echo "Do you want to install it?"
+select yn in "Yes" "No"; do
+	case $yn in
+		Yes ) ./sfdx/install; break;;
+		No ) exit;;
+	esac
+done
